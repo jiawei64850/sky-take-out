@@ -34,6 +34,7 @@ public class AliOssUtil {
         try {
             // 创建PutObject请求。
             ossClient.putObject(bucketName, objectName, new ByteArrayInputStream(bytes));
+            log.info("Uploading file: {} to bucket: {}", objectName, bucketName);
         } catch (OSSException oe) {
             System.out.println("Caught an OSSException, which means your request made it to OSS, "
                     + "but was rejected with an error response for some reason.");
