@@ -1,6 +1,9 @@
 package com.sky.interceptor;
 
 import com.sky.constant.JwtClaimsConstant;
+import com.sky.constant.MessageConstant;
+import com.sky.context.BaseContext;
+import com.sky.exception.LoginFailedException;
 import com.sky.properties.JwtProperties;
 import com.sky.utils.JwtUtil;
 import io.jsonwebtoken.Claims;
@@ -11,6 +14,7 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 
 /**
  * jwt令牌校验的拦截器
@@ -32,20 +36,44 @@ public class JwtTokenAdminInterceptor implements HandlerInterceptor {
      * @throws Exception
      */
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+
+        System.out.println("当前线程的id：" + Thread.currentThread().getId());
         //判断当前拦截到的是Controller的方法还是其他资源
         if (!(handler instanceof HandlerMethod)) {
             //当前拦截到的不是动态方法，直接放行
             return true;
         }
 
-		//获取登录数据员工id
-        Long employeeId = (Long) request.getSession().getAttribute("employee");
-        if(employeeId!=null){
-			//如果有登录数据，代表一登录，放行
+//		//获取登录数据员工id
+//        Long employeeId = (Long) request.getSession().getAttribute("employee");
+//
+//
+//        if(employeeId!=null){
+//            //如果有登录数据，代表一登录，放行
+//            return true;
+//        }else{
+//            //否则，发送未认证错误信息
+//            response.setStatus(401);
+//            return false;
+//        }
+        // get the data of token of header
+        String token = request.getHeader(jwtProperties.getAdminTokenName());
+
+        try {
+            // parse the token
+            log.info("jwt校验:{}", token);
+            Claims claims = JwtUtil.parseJWT(jwtProperties.getAdminSecretKey(), token);
+            Long empId = claims.get(JwtClaimsConstant.EMP_ID, Long.class);
+            log.info("当前员工id: {}", empId);
+            BaseContext.setCurrentId(empId);
+            //如果有登录数据，代表一登录，放行
             return true;
-        }else{
-			//否则，发送未认证错误信息
-			response.setStatus(401);
+
+        } catch (Exception e) {
+            // exception detect
+            // throw new LoginFailedException(MessageConstant.LOGIN_FAILED);
+            //否则，发送未认证错误信息
+            response.setStatus(401);
             return false;
         }
     }
