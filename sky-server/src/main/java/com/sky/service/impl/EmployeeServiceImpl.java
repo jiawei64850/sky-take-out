@@ -87,15 +87,16 @@ public class EmployeeServiceImpl implements EmployeeService {
         // set the password, default for 123456
         employee.setPassword(DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes()));
 
-        // set the time of creating and updating
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
-
-        // set the user of creating and updating
-        Long currentId = BaseContext.getCurrentId();
-
-        employee.setCreateUser(currentId);
-        employee.setUpdateUser(currentId);
+        // 使用公共字段自动填充逻辑
+//        // set the time of creating and updating
+//        employee.setCreateTime(LocalDateTime.now());
+//        employee.setUpdateTime(LocalDateTime.now());
+//
+//        // set the user of creating and updating
+//        Long currentId = BaseContext.getCurrentId();
+//
+//        employee.setCreateUser(currentId);
+//        employee.setUpdateUser(currentId);
 
         employeeMapper.insert(employee);
     }
@@ -156,9 +157,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = new Employee();
         // copy attributes
         BeanUtils.copyProperties(employeeDTO, employee);
+        // 使用公共字段自动填充逻辑
         // add update time and update user
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setUpdateUser(BaseContext.getCurrentId());
+//        employee.setUpdateTime(LocalDateTime.now());
+//        employee.setUpdateUser(BaseContext.getCurrentId());
         employeeMapper.update(employee);
     }
 
@@ -172,7 +174,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         String oldPassword = passwordEditDTO.getOldPassword();
         if (employee.getPassword().equals(DigestUtils.md5DigestAsHex(oldPassword.getBytes()))) {
             employee.setPassword(DigestUtils.md5DigestAsHex(newPassword.getBytes()));
-            employee.setUpdateTime(LocalDateTime.now());
+            // employee.setUpdateTime(LocalDateTime.now());
             employeeMapper.update(employee);
         } else {
             throw new PasswordErrorException(MessageConstant.PASSWORD_ERROR);
