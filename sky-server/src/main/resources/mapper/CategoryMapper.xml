@@ -16,7 +16,7 @@
         order by sort asc , create_time desc
     </select>
 
-    <update id="update" parameterType="Category">
+    <update id="update">
         update category
         <set>
             <if test="type != null">
