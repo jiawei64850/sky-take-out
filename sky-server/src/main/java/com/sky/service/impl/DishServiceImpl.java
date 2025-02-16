@@ -160,7 +160,18 @@ public class DishServiceImpl implements DishService {
         return dishVOes;
     }
 
-
+    /**
+     * 启用/禁用菜品
+     * @param status
+     * @param id
+     */
+    public void enableOrDisable(Integer status, Long id) {
+        Dish dish = Dish.builder()
+                .status(status)
+                .id(id)
+                .build();
+        dishMapper.update(dish);
+    }
 
 
 }

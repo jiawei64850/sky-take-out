@@ -52,4 +52,12 @@ public interface DishService {
      * @return
      */
     List<DishVO> getByCategoryId(Long categoryId);
+
+
+    /**
+     * 启用/禁用菜品
+     * @param status
+     * @param id
+     */
+    void enableOrDisable(Integer status, Long id);
 }
