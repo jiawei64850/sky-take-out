@@ -3,6 +3,8 @@ package com.sky.controller.admin;
 import com.sky.constant.MessageConstant;
 import com.sky.result.Result;
 import com.sky.utils.AliOssUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,12 +18,19 @@ import java.util.UUID;
 @Slf4j
 @RequestMapping("/admin/common")
 @RestController
+@Api(tags = "公共接口")
 public class CommonController {
     @Autowired
     private AliOssUtil aliOssUtil;
 
+    /**
+     * 文件上传
+     * @param file
+     * @return
+     */
     // use aliOss for file upload
     @PostMapping("/upload")
+    @ApiOperation("文件上传")
     public Result upload(MultipartFile file) {
 
         String originalFilename = file.getOriginalFilename(); // get original name of file

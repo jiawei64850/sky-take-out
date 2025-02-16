@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sky.mapper.SetmealMapper">
+    <!--新增菜品-->
+    <insert id="insert" parameterType="com.sky.entity.Setmeal" useGeneratedKeys="true" keyProperty="id">
+        insert into setmeal values (null, #{categoryId}, #{name}, #{price}, #{status},
+        #{description}, #{image}, #{createTime}, #{updateTime}, #{createUser}, #{updateUser})
+    </insert>
+
+    <!--分页查询套餐列表-->
+    <select id="list" resultType="com.sky.vo.SetmealVO" parameterType="com.sky.dto.SetmealPageQueryDTO">
+        select t1.*, t2.name categoryName from setmeal t1, category t2
+        where t1.category_id = t2.id
+        <if test="name != null">and t1.name like concat('%', #{name}, '%')</if>
+        <if test="status != null">and t1.status = #{status}</if>
+        <if test="categoryId != null">and t1.category_id = #{categoryId}</if>
+    </select>
+    <!--根据id查询套餐-->
+    <select id="selectById" resultType="com.sky.entity.Setmeal" parameterType="java.lang.Long">
+        select * from setmeal where id = #{id}
+    </select>
+    <!--修改套餐-->
+    <update id="update" parameterType="com.sky.entity.Setmeal" useGeneratedKeys="true" keyProperty="id">
+        update setmeal
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="categoryId != null">category_id = #{categoryId},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="image != null">image = #{image},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateUser != null">update_user = #{updateUser},</if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

@@ -5,7 +5,9 @@ import com.sky.dto.DishPageQueryDTO;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.DishService;
+import com.sky.vo.DishItemVO;
 import com.sky.vo.DishVO;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +15,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
 
 @Slf4j
-@ApiOperation("菜品相关接口")
+@Api(tags = "菜品相关接口")
 @RequestMapping("/admin/dish")
 @RestController
 
@@ -86,6 +87,19 @@ public class DishController {
         log.info("修改菜品: {}", dishDTO);
         dishService.update(dishDTO);
         return Result.success();
+    }
+
+    /**
+     * 根据分类id查询菜品
+     * @param categoryId
+     * @return
+     */
+    @GetMapping("/list")
+    @ApiOperation("根据分类id查询菜品")
+    public Result getByCategoryId(@RequestParam Long categoryId) {
+        log.info("根据分类id查询菜品: {}", categoryId);
+        List<DishVO> dishes = dishService.getByCategoryId(categoryId);
+        return Result.success(dishes);
     }
 }
 

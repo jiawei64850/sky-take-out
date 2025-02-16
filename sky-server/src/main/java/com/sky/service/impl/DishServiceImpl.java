@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -140,6 +141,26 @@ public class DishServiceImpl implements DishService {
             dishFlavorMapper.insertBatch(flavors);
         }
     }
+
+    /**
+     * 根据分类id查询菜品
+     * @param categoryId
+     * @return
+     */
+    public List<DishVO> getByCategoryId(Long categoryId) {
+        // 1. get the information for dishes based on category_id
+        List<Dish> dishes = dishMapper.getByCategoryId(categoryId);
+        // 2. encapsulate each dish into DishVO
+        List<DishVO> dishVOes = dishes.stream().map(dish -> {
+            DishVO dishVO = new DishVO();
+            BeanUtils.copyProperties(dish, dishVO);
+            return dishVO;
+        }).collect(Collectors.toList());
+        // 3. return the whole dishVO list
+        return dishVOes;
+    }
+
+
 
 
 }
