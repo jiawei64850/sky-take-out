@@ -7,7 +7,6 @@
         #{description}, #{status}, #{createTime}, #{updateTime}, #{createUser}, #{updateUser})
     </insert>
 
-
     <!--分页查询菜品列表-->
     <select id="list" resultType="com.sky.vo.DishVO" parameterType="com.sky.dto.DishPageQueryDTO">
         select t1.*, t2.name categoryName from dish t1, category t2
@@ -17,6 +16,7 @@
         <if test="categoryId != null">and t1.category_id = #{categoryId}</if>
         order by update_time desc
     </select>
+
     <!--根据id查询菜品-->
     <select id="selectById" resultType="com.sky.entity.Dish" parameterType="java.lang.Long">
         select * from dish where id = #{id}
@@ -29,6 +29,7 @@
             #{id}
         </foreach>
     </delete>
+
     <!--修改菜品-->
     <update id="update" parameterType="com.sky.entity.Dish">
         update dish
@@ -44,6 +45,7 @@
         </set>
         where id = #{id}
     </update>
+
     <!--根据分类id查询菜品-->
     <select id="getByCategoryId" resultType="com.sky.entity.Dish" parameterType="java.lang.Long">
         select * from dish where category_id = #{categoryId}
