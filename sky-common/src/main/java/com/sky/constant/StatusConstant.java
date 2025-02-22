@@ -5,6 +5,8 @@ package com.sky.constant;
  */
 public class StatusConstant {
 
+    public static final String SHOP_STATUS = "status";
+
     //启用
     public static final Integer ENABLE = 1;
 

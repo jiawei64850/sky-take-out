@@ -50,4 +50,21 @@
     <select id="getByCategoryId" resultType="com.sky.entity.Dish" parameterType="java.lang.Long">
         select * from dish where category_id = #{categoryId}
     </select>
+
+    <!--用户端：根据分类id查询菜品列表-->
+    <select id="listBy" resultType="com.sky.entity.Dish" parameterType="com.sky.entity.Dish">
+        select * from dish
+        <where>
+            <if test="name != null">
+                and name like concat('%',#{name},'%')
+            </if>
+            <if test="categoryId != null">
+                and category_id = #{categoryId}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
 </mapper>

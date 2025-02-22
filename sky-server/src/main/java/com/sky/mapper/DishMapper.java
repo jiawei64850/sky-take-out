@@ -6,9 +6,6 @@ import com.sky.dto.DishPageQueryDTO;
 import com.sky.entity.Dish;
 import com.sky.enumeration.OperationType;
 import com.sky.vo.DishVO;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -67,4 +64,11 @@ public interface DishMapper {
      * @return
      */
     List<Dish> getByCategoryId(Long categoryId);
+
+    /**
+     * 根据分类id查询菜品列表
+     * @param dish
+     * @return
+     */
+    List<Dish> listBy(Dish dish);
 }
