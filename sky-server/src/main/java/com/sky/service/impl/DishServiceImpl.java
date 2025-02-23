@@ -48,17 +48,19 @@ public class DishServiceImpl implements DishService {
         BeanUtils.copyProperties(dishDTO, dish);
         // call mapper to store method
         dishMapper.insert(dish);
-        // TODO get dish id
+        // get dish id
         log.info("dishId: {}", dish.getId());
 
         // 2. construct the list of flavor of dish, put it into table of dish_flavor
         List<DishFlavor> dishFlavorList = dishDTO.getFlavors();
-        // 2.1 associate the id of dish
-        dishFlavorList.forEach(dishFlavor -> {
-            dishFlavor.setDishId(dish.getId());
-        });
-        // 2.2 call the mapper to store method with batch insert
-        dishFlavorMapper.insertBatch(dishFlavorList);
+        if (dishFlavorList != null && dishFlavorList.size() > 0) {
+            // 2.1 associate the id of dish
+            dishFlavorList.forEach(dishFlavor -> {
+                dishFlavor.setDishId(dish.getId());
+            });
+            // 2.2 call the mapper to store method with batch insert
+            dishFlavorMapper.insertBatch(dishFlavorList);
+        }
     }
 
     /**
@@ -149,17 +151,12 @@ public class DishServiceImpl implements DishService {
      * @param categoryId
      * @return
      */
-    public List<DishVO> getByCategoryId(Long categoryId) {
-        // 1. get the information for dishes based on category_id
-        List<Dish> dishes = dishMapper.getByCategoryId(categoryId);
-        // 2. encapsulate each dish into DishVO
-        List<DishVO> dishVOes = dishes.stream().map(dish -> {
-            DishVO dishVO = new DishVO();
-            BeanUtils.copyProperties(dish, dishVO);
-            return dishVO;
-        }).collect(Collectors.toList());
-        // 3. return the whole dishVO list
-        return dishVOes;
+    public List<Dish> getByCategoryId(Long categoryId) {
+        Dish dish = Dish.builder()
+                .categoryId(categoryId)
+                .status(StatusConstant.ENABLE)
+                .build();
+        return dishMapper.listBy(dish);
     }
 
     /**

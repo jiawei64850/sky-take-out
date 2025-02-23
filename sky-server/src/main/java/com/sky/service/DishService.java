@@ -52,7 +52,7 @@ public interface DishService {
      * @param categoryId
      * @return
      */
-    List<DishVO> getByCategoryId(Long categoryId);
+    List<Dish> getByCategoryId(Long categoryId);
 
 
     /**
