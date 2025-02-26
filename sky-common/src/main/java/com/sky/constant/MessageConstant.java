@@ -24,4 +24,8 @@ public class MessageConstant {
     public static final String ORDER_STATUS_ERROR = "订单状态错误";
     public static final String ORDER_NOT_FOUND = "订单不存在";
     public static final String ALREADY_EXISTS = "已存在";
+    public static final String SHOP_ADDRESS_PARSE_FAIL = "店铺地址解析失败";
+    public static final String USER_ADDRESS_PARSE_FAIL = "收货地址解析失败";
+    public static final String DELIVERY_NAVIGATION_FAIL = "配送路线规划失败";
+    public static final String OUT_OF_RANGE = "超出配送范围";
 }
