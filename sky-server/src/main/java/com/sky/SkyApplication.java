@@ -6,8 +6,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+@EnableScheduling // activate the function of task schedule
 @EnableCaching // activate the function of annotation of cache
 @MapperScan("com.sky.mapper") // specify the scan of mapper
 @SpringBootApplication

@@ -109,4 +109,18 @@ public class OrdersController {
         ordersService.repeat(id);
         return Result.success();
     }
+
+    /**
+     * 催单
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/reminder/{id}")
+    @ApiOperation("催单")
+    public Result reminder(@PathVariable Long id) throws Exception {
+        log.info("催单: {}", id);
+        ordersService.reminder(id);
+        return Result.success();
+    }
 }

@@ -28,4 +28,7 @@ public class MessageConstant {
     public static final String USER_ADDRESS_PARSE_FAIL = "收货地址解析失败";
     public static final String DELIVERY_NAVIGATION_FAIL = "配送路线规划失败";
     public static final String OUT_OF_RANGE = "超出配送范围";
+
+    public static final String CANCEL_BY_USER = "用户取消订单";
+    public static final String CANCEL_BY_OVERTIME = "订单超时，自动取消";
 }
