@@ -1,14 +1,19 @@
 package com.sky.mapper;
 
 import com.github.pagehelper.Page;
+import com.sky.dto.GoodsSalesDTO;
 import com.sky.dto.OrdersPageQueryDTO;
 import com.sky.entity.Orders;
+import io.lettuce.core.dynamic.annotation.Key;
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Select;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 public interface OrdersMapper {
+    
     /**
      * 添加订单
      * @param orders
@@ -60,4 +65,27 @@ public interface OrdersMapper {
      */
     @Select("select * from orders where status = #{status} and order_time < #{time}")
     List<Orders> getByStatsandOrderTime(Integer status, LocalDateTime time);
+
+    /**
+     * 通过状态和下单时间获得当日总营业额
+     * @param map
+     * @return
+     */
+    @Select("select sum(amount) from orders where status = #{status} and order_time between #{beginTime} and #{endTime}")
+    Double sumByMap(Map map);
+
+    /**
+     * 计算订单数据
+     * @param map
+     * @return
+     */
+    Integer countByMap(Map map);
+
+    /**
+     * 查询销量排名top10
+     * @param map
+     * @return
+     */
+    @MapKey("name")
+    List<GoodsSalesDTO> sumTop10(Map map);
 }

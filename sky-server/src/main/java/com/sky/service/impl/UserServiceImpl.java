@@ -1,4 +1,4 @@
-package com.sky.service;
+package com.sky.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -8,6 +8,7 @@ import com.sky.entity.User;
 import com.sky.exception.LoginFailedException;
 import com.sky.mapper.UserMapper;
 import com.sky.properties.WeChatProperties;
+import com.sky.service.UserService;
 import com.sky.utils.HttpClientUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
